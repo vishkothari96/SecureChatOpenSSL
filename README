@@ -1,0 +1,176 @@
+This the README for the Tarball of this project
+
+Here, we have the following directory structure:
+
+./
+├── Alice                               # This is the directory which contains all the Certificates, CSR, Private-Key files, other conf files of Alice
+│   ├── Alice.crt
+│   ├── Alice.csr
+│   ├── Alice.pem
+│   ├── CSRConfAlice.cnf
+│   └── extensionsAlice.txt
+├── All_Pcaps.zip			# This is the ZIP which contains all the PCAP traces of the respective tasks which had been executed.
+├── Bob					# This is the directory which contains all the Certificates, CSR, Private-Key files, other conf files of Bob
+│   ├── Bob.crt
+│   ├── Bob.csr
+│   ├── Bob.pem
+│   ├── CSRConfBob.cnf
+│   └── extensionsBob.txt
+├── build				# This is the directory which contains all the executable files
+├── CAfile.pem				# This is the file which contains certificates of both the Intermediate CA and Root CA.
+├── fake_certs				# This is the directory where all the files are required for TASK-4
+│   ├── Alice
+│   │   ├── Alice.csr
+│   │   ├── Alice.key
+│   │   ├── CSRConfAlice.cnf
+│   │   ├── extensionsAlice.txt
+│   │   └── fakealice.crt
+│   ├── Bob
+│   │   ├── Bob.csr
+│   │   ├── Bob.key
+│   │   ├── CSRConfBob.cnf
+│   │   ├── extensionsBob.txt
+│   │   └── fakebob.crt
+│   ├── InterCA
+│   │   ├── CSRConfInterCA.cnf
+│   │   ├── extensionsInterCA.txt
+│   │   ├── InterCA.crt
+│   │   ├── InterCA.csr
+│   │   ├── InterCA.srl
+│   │   └── Inter-private-key.pem
+│   └── RootCA
+│       ├── CSRConfRootCA.cnf
+│       ├── extensionsRootCA.txt
+│       ├── rootCA.crt
+│       ├── RootCA.csr
+│       ├── rootCA.srl
+│       └── root-private-key.pem
+├── InterCA				# This is the directory which contains all the Certificates, CSR, Private-Key files, other conf files of IntermediateCA
+│   ├── CSRConfInterCA.cnf
+│   ├── extensionsInterCA.txt
+│   ├── InterCA.crt
+│   ├── InterCA.csr
+│   ├── InterCA.srl
+│   └── Inter-private-key.pem
+├── Makefile 				# This is the Makefile of the Project
+├── Asg6-CS22MTECH12004-CS22MTECH12007-Report.pdf 				# This is the Report of the Project in pdf format
+├── README				# This is the README file of the Project
+├── README				# This is the README file of the Project
+├── RootCA				# This is the directory which contains all the Certificates, CSR, Private-Key files, other conf files of RootCA
+│   ├── CSRConfRootCA.cnf
+│   ├── extensionsRootCA.txt
+│   ├── rootCA.crt
+│   ├── RootCA.csr
+│   ├── rootCA.srl
+│   └── root-private-key.pem
+└── src					# This is the directory where all the source files(.cpp) of this project reside 
+    ├── secure_chat_app.cpp    		      # Task 2 Source Porgram
+    ├── secure_chat_interceptor.cpp 	      # Task 3 Source Porgram
+    └── secure_chat_active_interceptor.cpp    # Task 4 Source Porgram
+
+############################################################################################################################################################################################################
+
+"All_Pcaps.zip" Zip file Details:
+
+Archive:  All_Pcaps.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  2023-04-03 01:20   All_Pcaps/
+    10036  2023-04-03 01:21   All_Pcaps/bob1_inter.pcap		 # Task3 pcap, for Bob
+    19559  2023-04-03 01:20   All_Pcaps/alice1.pcap              # Task2 pcap, for Alice
+       24  2023-04-03 01:20   All_Pcaps/alice1_inter.pcap	 # Task3 pcap, for Alice
+    19331  2023-04-03 01:20   All_Pcaps/alice1_active.pcap	 # Task4 pcap, for Alice
+    38773  2023-04-03 01:20   All_Pcaps/trudy1_active.pcap	 # Task4 pcap, for Trudy
+    20472  2023-04-03 01:21   All_Pcaps/trudy1_inter.pcap	 # Task3 pcap, for Trudy
+    19558  2023-04-03 01:21   All_Pcaps/bob1.pcap		 # Task2 pcap, for Bob
+    19595  2023-04-03 01:21   All_Pcaps/bob1_active.pcap	 # Task4 pcap, for Bob
+---------                     -------
+   147348                     9 files
+
+############################################################################################################################################################################################################
+
+To run this Project, run the Following command:
+
+	make
+
+What this does is that, it compiles all the source code and creates all the required executables.
+############################################################################################################################################################################################################
+
+TASK 1: Here, all the certificates have been generated and kept in the respective folders and the commands have been shown in the report attached in this tarball.
+
+############################################################################################################################################################################################################
+
+TASK 2: To execute this Task,
+
+	STEP 1: Please open two terminals which are logged into the VM provided.
+	STEP 2: Now copy the executable into the Alice Container:
+
+		lxc exec alice1 mkdir /root/task2/
+		sudo cp -R Alice/ /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task2/
+		sudo cp -R build/ /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task2/
+		sudo cp -R CAfile.pem /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task2/
+
+	STEP 3: Now copy the executable into the Bob Container:
+
+		lxc exec bob1 mkdir /root/task2/
+		sudo cp -R Bob/ /var/snap/lxd/common/lxd/storage-pools/default/containers/bob11/rootfs/root/task2/
+		sudo cp -R build/ /var/snap/lxd/common/lxd/storage-pools/default/containers/bob1/rootfs/root/task2/
+		sudo cp -R CAfile.pem /var/snap/lxd/common/lxd/storage-pools/default/containers/bob1/rootfs/root/task2/
+
+	STEP 4: Now start the Server on Bob's container after logging into the container from inside the build folder:
+
+		./secure_chat_app -s
+		
+	STEP 5: Now start the Client on Alice's container after logging into the container from inside the build folder:
+
+		./secure_chat_app -c bob1
+
+############################################################################################################################################################################################################
+
+TASK 3: To execute this Task,
+
+	STEP 1: Please open three terminals which are logged into the VM provided.
+	STEP 2: Now run the following commands on the VM:
+
+		lxc exec trudy1 mkdir /root/task3/
+		sudo cp -R fake_certs/ /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task3/
+		sudo cp -R build/ /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task3/
+		sudo cp -R CAfile.pem /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task3/
+
+	STEP 3: Now start the Server on Bob's container after logging into the container from inside the build folder:
+
+		./secure_chat_app -s
+		
+	STEP 4: Now start the Trudy Intercpetor on Trudy's container after logging into the container from inside the build folder:
+
+		./secure_chat_interceptor -d alice1 bob1
+		
+	STEP 5: Now start the Client on Alice's container after logging into the container from inside the build folder:
+
+		./secure_chat_app -c bob1
+
+############################################################################################################################################################################################################
+
+TASK 4: To execute this Task,
+
+	STEP 1: Please open three terminals which are logged into the VM provided.
+	STEP 2: Now run the following commands on the VM:
+
+		lxc exec trudy1 mkdir /root/task4/
+		sudo cp -R fake_certs/ /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task4/
+		sudo cp -R build/ /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task4/
+		sudo cp -R CAfile.pem /var/snap/lxd/common/lxd/storage-pools/default/containers/alice1/rootfs/root/task4/
+
+	STEP 3: Now start the Server on Bob's container after logging into the container from inside the build folder:
+
+		./secure_chat_app -s
+		
+	STEP 4: Now start the Trudy Intercpetor on Trudy's container after logging into the container from inside the build folder:
+
+		./secure_chat_active_interceptor -m alice1 bob1
+		
+	STEP 5: Now start the Client on Alice's container after logging into the container from inside the build folder:
+
+		./secure_chat_app -c bob1
+
+############################################################################################################################################################################################################
